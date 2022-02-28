@@ -82,6 +82,7 @@ public class Employee implements Serializable {
         return employeeCode;
     }
 
+    
     public void setEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
     }
