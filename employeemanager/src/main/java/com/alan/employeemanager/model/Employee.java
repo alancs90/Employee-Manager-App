@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 @Entity
 public class Employee implements Serializable {
+    private static final long serialVersionUID = 3245861546678860251L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -81,7 +82,7 @@ public class Employee implements Serializable {
     public String getEmployeeCode() {
         return employeeCode;
     }
-    
+
     public void setEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
     }

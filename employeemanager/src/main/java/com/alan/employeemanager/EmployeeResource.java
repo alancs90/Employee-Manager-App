@@ -2,6 +2,7 @@ package com.alan.employeemanager;
 
 import com.alan.employeemanager.model.Employee;
 import com.alan.employeemanager.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeResource {
-    private final EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
 
-    public EmployeeResource(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+//    public EmployeeResource(EmployeeService employeeService) {
+//        this.employeeService = employeeService;
+//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> getAllEmployees(){
