@@ -15,9 +15,9 @@ public class EmployeeResource {
     @Autowired
     private EmployeeService employeeService;
 
-    public EmployeeResource(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+//    public EmployeeResource(EmployeeService employeeService) {
+//        this.employeeService = employeeService;
+//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> getAllEmployees(){

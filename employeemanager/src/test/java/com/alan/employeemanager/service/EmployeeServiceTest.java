@@ -25,20 +25,15 @@ class EmployeeServiceTest {
         employee.setJobTitle("Java");
         employee.setPhone("12345678");
         employee.setImageUrl("image.com");
-//        employee.setEmployeeCode(UUID.randomUUID().toString());
-        employee.setEmployeeCode("8d8b30e3-de52-4f1c-a71c-9905a8043dac");
+        employee.setEmployeeCode("8d8b30e3-de52-4f1c-a71c-9905a8043dab");
 
-//        Long actualEmpId = employee.getId();
-//        assertEquals(employee, empFromDao);
-
-        UUID defaultUuid = UUID.fromString("8d8b30e3-de52-4f1c-a71c-9905a8043dac");
+        UUID defaultUuid = UUID.fromString("8d8b30e3-de52-4f1c-a71c-9905a8043dab");
 
         try (MockedStatic<UUID> mockedUuid = Mockito.mockStatic(UUID.class)) {
             mockedUuid.when(UUID::randomUUID).thenReturn(defaultUuid);
             employee = employeeService.addEmployee(employee);
             Employee empFromDao = employeeService.findEmployeeById(employee.getId());
 
-//        Long actualEmpId = employee.getId();
             assertEquals(employee, empFromDao);
             assertEquals(1L, empFromDao.getId());
             assertEquals("Alan", empFromDao.getName());
@@ -47,6 +42,9 @@ class EmployeeServiceTest {
             assertEquals("12345678", empFromDao.getPhone());
             assertEquals("image.com", empFromDao.getImageUrl());
             assertEquals(defaultUuid.toString(), empFromDao.getEmployeeCode());
+
+            System.out.println(employee.toString());
+            System.out.println(empFromDao.toString());
         }
     }
 

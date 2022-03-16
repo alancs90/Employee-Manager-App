@@ -2,6 +2,7 @@ package com.alan.employeemanager.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 public class Employee implements Serializable {
@@ -98,5 +99,18 @@ public class Employee implements Serializable {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", employeeCode='" + employeeCode + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getId().equals(employee.getId()) && getName().equals(employee.getName()) && getEmail().equals(employee.getEmail()) && getJobTitle().equals(employee.getJobTitle()) && getPhone().equals(employee.getPhone()) && getImageUrl().equals(employee.getImageUrl()) && getEmployeeCode().equals(employee.getEmployeeCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getEmail(), getJobTitle(), getPhone(), getImageUrl(), getEmployeeCode());
     }
 }
