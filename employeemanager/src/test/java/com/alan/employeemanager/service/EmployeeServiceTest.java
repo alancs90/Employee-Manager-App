@@ -3,12 +3,15 @@ import com.alan.employeemanager.model.Employee;
 import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class EmployeeServiceTest {
     @Autowired
     EmployeeService employeeService;
@@ -18,26 +21,33 @@ class EmployeeServiceTest {
         Employee employee = new Employee();
         employee.setId(1L);
         employee.setName("Alan");
-        employee.setEmail("alan@.com");
+        employee.setEmail("alan@a.com");
         employee.setJobTitle("Java");
         employee.setPhone("12345678");
         employee.setImageUrl("image.com");
-        employee.setEmployeeCode(UUID.randomUUID().toString());
-
-        employee = employeeService.addEmployee(employee);
-        Employee empFromDao = employeeService.findEmployeeById(employee.getId());
+//        employee.setEmployeeCode(UUID.randomUUID().toString());
+        employee.setEmployeeCode("8d8b30e3-de52-4f1c-a71c-9905a8043dac");
 
 //        Long actualEmpId = employee.getId();
-        assertEquals(employee, empFromDao);
-        assertEquals(1L, employee.getId());
-        assertEquals("Alan", employee.getName());
-        assertEquals("alan@a.com", employee.getEmail());
-        assertEquals("Java", employee.getJobTitle());
-        assertEquals("12345678", employee.getPhone());
-        assertEquals("image.com", employee.getImageUrl());
-        assertEquals("Alan", employee.getName());
-        assertEquals("1234abcd", employee.getEmployeeCode());
+//        assertEquals(employee, empFromDao);
 
+        UUID defaultUuid = UUID.fromString("8d8b30e3-de52-4f1c-a71c-9905a8043dac");
+
+        try (MockedStatic<UUID> mockedUuid = Mockito.mockStatic(UUID.class)) {
+            mockedUuid.when(UUID::randomUUID).thenReturn(defaultUuid);
+            employee = employeeService.addEmployee(employee);
+            Employee empFromDao = employeeService.findEmployeeById(employee.getId());
+
+//        Long actualEmpId = employee.getId();
+            assertEquals(employee, empFromDao);
+            assertEquals(1L, empFromDao.getId());
+            assertEquals("Alan", empFromDao.getName());
+            assertEquals("alan@a.com", empFromDao.getEmail());
+            assertEquals("Java", empFromDao.getJobTitle());
+            assertEquals("12345678", empFromDao.getPhone());
+            assertEquals("image.com", empFromDao.getImageUrl());
+            assertEquals(defaultUuid.toString(), empFromDao.getEmployeeCode());
+        }
     }
 
     @Test
